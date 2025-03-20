@@ -1,0 +1,32 @@
+name: Deploy GitHub Pages with LFS
+
+on:
+  push:
+    branches:
+      - main  # Change this if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository with LFS enabled
+        uses: actions/checkout@v3
+        with:
+          lfs: true  # Enables LFS support
+
+      - name: Install Git LFS
+        run: |
+          git lfs install
+          git lfs pull
+
+      - name: Build static files
+        run: |
+          # Run any build scripts if necessary (e.g., npm run build)
+          echo "Building site..."
+
+      - name: Deploy to GitHub Pages
+        uses: actions/upload-pages-artifact@v2  # Uploads the build to GitHub Pages
+
+      - name: Deploy
+        uses: actions/deploy-pages@v2
